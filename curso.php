@@ -54,14 +54,27 @@
   
 <?php
 
-if (isset($_POST['cadastrar']))
-  {
+if(isset($_POST['cadastrar'])){
+  $tags = file_get_contents('teste.txt');
+  $tagsArray = explode(',', $tags);
+  $termo = $_POST['curso'];
+  
+  $count = 0;
+  foreach ($tagsArray as $tag) {
+    if ($tag == $termo) {
+      $count++;
+    }
+  }
+  
+  if ($count > 0) {
+    echo 'Curso já cadastrado';
+  } else {
     $arq   = fopen("teste.txt", "a+");
     $curso = $_POST['curso'];
-    fputs($arq, $curso . "\r\n");
+    fputs($arq,$curso . ",");
     fclose($arq);
   }
-
+}
 
 if (isset($_POST['listar']))
   {
@@ -73,7 +86,7 @@ if (isset($_POST['listar']))
         //corta a informação do arquivo em cada ; que encontrar, ou seja, separa as informações
         //a variável dados se torna um array e em cada posição estará um valor do arquivo
         // no nosso exemplo vai separar o nome, a idade e o email
-        $dados = explode(";",$textocerto);
+        $dados = explode(",",$textocerto);
         foreach ($dados as $chave => $valor)
           {
             
