@@ -54,24 +54,34 @@
   
 <?php
 
+
+
 if(isset($_POST['cadastrar'])){
   $tags = file_get_contents('teste.txt');
   $tagsArray = explode(',', $tags);
   $termo = $_POST['curso'];
-  
+  $countVazio = 0;
   $count = 0;
   foreach ($tagsArray as $tag) {
     if ($tag == $termo) {
       $count++;
     }
   }
+
+  foreach ($tagsArray as $tag) {
+    $tagsArray = trim( strip_tags( $tag ) );
+    if ( empty ( $tag ) ) {
+      $erro = 'Existem campos em branco.';
+  }
+  }
   
   if ($count > 0) {
-    echo 'Curso já cadastrado';
-  } else {
+    echo '<script>alert("Curso já cadastrado ou Campo Nulo!");</script>';
+  }  else {
     $arq   = fopen("teste.txt", "a+");
     $curso = $_POST['curso'];
     fputs($arq,$curso . ",");
+    echo '<script>alert("Curso cadastrado com sucesso!");</script>';
     fclose($arq);
   }
 }
