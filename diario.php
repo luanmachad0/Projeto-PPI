@@ -34,7 +34,7 @@
   <div class="container mt-4"> 
       <div class="row">
           <div class="col-sm">
-            <form action ="disciplina.php" method="post">
+            <form>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Cadastrar Disciplina</label>
                   <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira a Disciplina" name="disciplina" id="disciplina">
@@ -44,66 +44,12 @@
                   <input type="checkbox" class="form-check-input" id="exampleCheck1">
                   <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>
-                <button type="submit" class="btn btn-primary" id="cadastrar" name="cadastrar">Cadastrar</button>
-                <button type="submit" class="btn btn-primary" id="listar" name="listar">Listar Disciplina</button>
+                
               </form>
               
           </div>
       </div>
   </div>
-  <?php
-
-
-
-if(isset($_POST['cadastrar'])){
-  $tags = file_get_contents('disciplina.txt');
-  $tagsArray = explode(',', $tags);
-  $termo = $_POST['disciplina'];
-  $count = 0;
-  foreach ($tagsArray as $tag) {
-    if ($tag == $termo) {
-      $count++;
-    }
-  }
-
-  foreach ($tagsArray as $tag) {
-    $tagsArray = trim( strip_tags( $tag ) );
-    if ( empty ( $tag ) ) {
-      $erro = 'Existem campos em branco.';
-  }
-  }
-  
-  if ($count > 0) {
-    echo '<script>alert("Disciplina já cadastrada ou Campo Nulo!");</script>';
-  }  else {
-    $arq   = fopen("disciplina.txt", "a+");
-    $curso = $_POST['disciplina'];
-    fputs($arq,$curso . ",");
-    echo '<script>alert("Disciplina cadastrada com sucesso!");</script>';
-    fclose($arq);
-  }
-}
-
-if (isset($_POST['listar']))
-  {
-    $arq = fopen("disciplina.txt", "r");
-    while (!feof($arq))
-      {
-        $texto = fgets($arq);
-        $textocerto = ($texto);
-        //corta a informação do arquivo em cada ; que encontrar, ou seja, separa as informações
-        //a variável dados se torna um array e em cada posição estará um valor do arquivo
-        // no nosso exemplo vai separar o nome, a idade e o email
-        $dados = explode(",",$textocerto);
-        foreach ($dados as $chave => $valor)
-          {
-            
-            echo "<br>".(trim($valor));
-          }
-        
-      }
-  }
-?>
-  
+ 
 </body>
 </html>
